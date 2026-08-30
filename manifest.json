@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "harshith.autoheal",
+  "name": "AutoHeal Flight Deck",
+  "version": "1.0.0",
+  "author": "Harshith Nadig",
+  "license": "MIT",
+  "description": "Terminal Auto-Recovery & Reflex Healing dashboard for Omarchy: view active toolchain status, audit remembered project reflexes, and monitor healed errors.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "AutoHeal Flight Deck",
+    "description": "Terminal auto-recovery status and toolchain doctor.",
+    "category": "Developer Tools",
+    "aliases": [
+      "autoheal",
+      "terminal",
+      "devtools",
+      "reflex"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
