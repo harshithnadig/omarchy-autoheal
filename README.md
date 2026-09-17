@@ -8,7 +8,7 @@ This section describes the current implementation and takes precedence over broa
 
 Requires Omarchy Quattro's plugin-capable shell, Qt 6 / QtQuick / QtQuick.Controls / QtQuick.Layouts, Quickshell and Omarchy qs.Commons / qs.Ui modules. This is not a standalone QML application.
 
-Bash, jq, awk and GNU coreutils. Python, uv, Node.js, Docker and Git are inspected for versions. The separate AutoHeal executable is expected at ~/Work/autoheal/autoheal, with memory at ~/.local/share/autoheal/memory.json. Uses the Omarchy notification helper.
+Bash, jq, awk and GNU coreutils. Python, uv, Node.js, Docker and Git are inspected for versions. The separate AutoHeal executable is resolved from PATH, ~/.local/bin/autoheal, or ~/Work/autoheal/autoheal, with memory at ~/.local/share/autoheal/memory.json. Uses the Omarchy notification helper.
 
 ### Install
 

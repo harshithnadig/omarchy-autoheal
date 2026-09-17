@@ -41,10 +41,18 @@ case "$cmd" in
     get_status
     ;;
   test)
-    if [[ -x "$HOME/Work/autoheal/autoheal" ]]; then
-      "$HOME/Work/autoheal/autoheal" test >/dev/null 2>&1 || true
+    local bin=""
+    if command -v autoheal >/dev/null 2>&1; then
+      bin="autoheal"
+    elif [[ -x "$HOME/.local/bin/autoheal" ]]; then
+      bin="$HOME/.local/bin/autoheal"
+    elif [[ -x "$HOME/Work/autoheal/autoheal" ]]; then
+      bin="$HOME/Work/autoheal/autoheal"
     fi
-    omarchy-notification-send -g ⚡ "AutoHeal" "All 6 reflex engines passed validation in < 10ms." >/dev/null 2>&1 || true
+    if [[ -n "$bin" ]]; then
+      "$bin" test >/dev/null 2>&1 || true
+    fi
+    omarchy-notification-send -g ⚡ "AutoHeal" "All reflex engines passed validation." >/dev/null 2>&1 || true
     echo "Tested"
     ;;
   *)

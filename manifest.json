@@ -3,7 +3,7 @@
   "id": "harshith.autoheal",
   "name": "AutoHeal Flight Deck",
   "version": "1.0.0",
-  "author": "Harshith Nadig",
+  "author": "AutoHeal Contributors",
   "license": "MIT",
   "description": "Terminal Auto-Recovery & Reflex Healing dashboard for Omarchy: view active toolchain status, audit remembered project reflexes, and monitor healed errors.",
   "kinds": [
