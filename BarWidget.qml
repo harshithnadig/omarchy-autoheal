@@ -46,7 +46,7 @@ BarWidget {
     active: root.opened
     useActiveColor: true
     activeColor: Color.accent
-    tooltipText: "AutoHeal Flight Deck: Armed (< 5ms) • 0 Memory Rules"
+    tooltipText: "AutoHeal Flight Deck: local diagnostics"
 
     onPressed: function(b) {
       if (b === Qt.MiddleButton) {

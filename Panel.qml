@@ -19,10 +19,10 @@ Panel {
   readonly property string scriptPath:
     Qt.resolvedUrl("autoheal-plugin-engine.sh").toString().replace(/^file:\/\//, "")
 
-  property string status: "ARMED"
-  property int latencyMs: 3
+  property string status: "UNAVAILABLE"
+  property int latencyMs: -1
   property int memoryRules: 0
-  property var toolchains: { "python": "3.14", "uv": "0.12", "node": "26.7", "docker": "29.7", "git": "2.55" }
+  property var toolchains: { "python": "Not Found", "uv": "Not Found", "node": "Not Found", "docker": "Offline", "git": "Not Found" }
   property var recentHeals: []
 
   readonly property color fg: bar ? bar.foreground : Color.popups.text
@@ -69,7 +69,7 @@ Panel {
         try {
           var data = JSON.parse(text)
           if (data.status) root.status = data.status
-          if (data.reflex_latency_ms) root.latencyMs = data.reflex_latency_ms
+          root.latencyMs = data.reflex_latency_ms !== null && data.reflex_latency_ms !== undefined ? data.reflex_latency_ms : -1
           if (data.memory_rules !== undefined) root.memoryRules = data.memory_rules
           if (data.toolchains) root.toolchains = data.toolchains
           if (data.recent_heals) root.recentHeals = data.recent_heals
@@ -162,7 +162,7 @@ Panel {
 
             Text {
               textFormat: Text.PlainText
-              text: "⚡ Reflex Latency: < " + root.latencyMs + "ms  •  🧠 " + root.memoryRules + " Learned Rules"
+              text: (root.latencyMs >= 0 ? "⚡ Reflex Latency: " + root.latencyMs + "ms" : "⚡ Reflex latency: not measured") + "  •  🧠 " + root.memoryRules + " Learned Rules"
               color: Qt.darker(root.fg, 1.4)
               font.family: root.fontFam
               font.pixelSize: Style.font.caption
@@ -189,7 +189,7 @@ Panel {
               anchors.centerIn: parent
               spacing: 2
               Text { textFormat: Text.PlainText; text: "Python / UV"; font.pixelSize: Style.font.caption; color: Qt.darker(root.fg, 1.4) }
-              Text { textFormat: Text.PlainText; text: "✔ Active"; font.pixelSize: Style.font.caption; font.bold: true; color: "#38ef7d" }
+              Text { textFormat: Text.PlainText; text: root.toolchains.python; font.pixelSize: Style.font.caption; font.bold: true; color: root.toolchains.python === "Not Found" ? "#ffb86c" : "#38ef7d" }
             }
           }
 
@@ -203,7 +203,7 @@ Panel {
               anchors.centerIn: parent
               spacing: 2
               Text { textFormat: Text.PlainText; text: "Node / Pnpm"; font.pixelSize: Style.font.caption; color: Qt.darker(root.fg, 1.4) }
-              Text { textFormat: Text.PlainText; text: "✔ Active"; font.pixelSize: Style.font.caption; font.bold: true; color: "#38ef7d" }
+              Text { textFormat: Text.PlainText; text: root.toolchains.node; font.pixelSize: Style.font.caption; font.bold: true; color: root.toolchains.node === "Not Found" ? "#ffb86c" : "#38ef7d" }
             }
           }
 
@@ -217,7 +217,7 @@ Panel {
               anchors.centerIn: parent
               spacing: 2
               Text { textFormat: Text.PlainText; text: "Docker / Git"; font.pixelSize: Style.font.caption; color: Qt.darker(root.fg, 1.4) }
-              Text { textFormat: Text.PlainText; text: "✔ Active"; font.pixelSize: Style.font.caption; font.bold: true; color: "#38ef7d" }
+              Text { textFormat: Text.PlainText; text: root.toolchains.docker + " / " + root.toolchains.git; font.pixelSize: Style.font.caption; font.bold: true; color: "#38ef7d" }
             }
           }
         }
